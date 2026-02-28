@@ -16,7 +16,7 @@ Copy `prompt.md` into your project or personal configuration. You have several o
 
 ### Creating a plan
 
-Tell the agent to create a markdown plan. 
+Tell the agent to create a markdown plan.
 
 You can try being concise, e.g.:
 
@@ -24,7 +24,7 @@ You can try being concise, e.g.:
 Create a plan for a simple Rails hello world server with a React frontend.
 ```
 
-But sometimes I find the AI to switch to the builtin planning mode, which I don't want. 
+But sometimes I find the AI to switch to the builtin planning mode, which I don't want.
 
 So then I switch to being explicit:
 

@@ -1,6 +1,6 @@
 # Instructions: creating markdown plan files for implementation
 
-You will create a markdown plan files for implementation that will be saved to the local filesystems.
+You will create a markdown plan file for implementation that will be saved to the local filesystems.
 
 ## Output directory
 
