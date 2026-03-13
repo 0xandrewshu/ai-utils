@@ -17,17 +17,17 @@ wt_hook_validate_prereqs() {
 
     if ! command -v mix &>/dev/null; then
         echo "Error: mix not found. Install Elixir first."
-        exit 1
+        return 1
     fi
 
     if ! command -v psql &>/dev/null; then
         echo "Error: psql not found. Install PostgreSQL client."
-        exit 1
+        return 1
     fi
 
     if ! PGPASSWORD="$PG_PASSWORD" psql -U "$PG_USER" -h "$PG_HOST" -c "SELECT 1" postgres &>/dev/null; then
         echo "Error: Cannot connect to PostgreSQL as $PG_USER"
-        exit 1
+        return 1
     fi
 
     echo "Prerequisites OK"
@@ -97,10 +97,15 @@ wt_hook_post_setup() {
 
 wt_hook_pre_cleanup() {
     local wt_path="$1"
-    # Kill any running Phoenix server in this worktree
-    local pid_file="$wt_path/tmp/pids/server.pid"
-    if [ -f "$pid_file" ]; then
-        kill "$(cat "$pid_file")" 2>/dev/null || true
+    # Kill any running Phoenix server by finding the process on its port
+    local phx_port
+    phx_port=$(grep -oP 'PHX_PORT=\K\d+' "$wt_path/.env.local" 2>/dev/null)
+    if [ -n "$phx_port" ]; then
+        local pid
+        pid=$(lsof -ti ":$phx_port" 2>/dev/null)
+        if [ -n "$pid" ]; then
+            kill "$pid" 2>/dev/null || true
+        fi
     fi
 }
 

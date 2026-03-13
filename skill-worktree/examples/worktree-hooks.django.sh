@@ -17,17 +17,17 @@ wt_hook_validate_prereqs() {
 
     if ! command -v python3 &>/dev/null; then
         echo "Error: python3 not found."
-        exit 1
+        return 1
     fi
 
     if ! command -v psql &>/dev/null; then
         echo "Error: psql not found. Install PostgreSQL client."
-        exit 1
+        return 1
     fi
 
     if ! PGPASSWORD="$PG_PASSWORD" psql -U "$PG_USER" -h "$PG_HOST" -c "SELECT 1" postgres &>/dev/null; then
         echo "Error: Cannot connect to PostgreSQL as $PG_USER"
-        exit 1
+        return 1
     fi
 
     echo "Prerequisites OK"
@@ -129,10 +129,15 @@ wt_hook_post_setup() {
 
 wt_hook_pre_cleanup() {
     local wt_path="$1"
-    # Kill any running Django dev server
-    local pid_file="$wt_path/.server.pid"
-    if [ -f "$pid_file" ]; then
-        kill "$(cat "$pid_file")" 2>/dev/null || true
+    # Kill any running Django dev server by finding the process on its port
+    local server_port
+    server_port=$(grep -oP '^PORT=\K\d+' "$wt_path/.env" 2>/dev/null)
+    if [ -n "$server_port" ]; then
+        local pid
+        pid=$(lsof -ti ":$server_port" 2>/dev/null)
+        if [ -n "$pid" ]; then
+            kill "$pid" 2>/dev/null || true
+        fi
     fi
 }
 

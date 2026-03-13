@@ -16,22 +16,22 @@ wt_hook_validate_prereqs() {
 
     if ! command -v ruby &>/dev/null; then
         echo "Error: ruby not found."
-        exit 1
+        return 1
     fi
 
     if ! command -v bundle &>/dev/null; then
         echo "Error: bundler not found. Run: gem install bundler"
-        exit 1
+        return 1
     fi
 
     if ! command -v psql &>/dev/null; then
         echo "Error: psql not found. Install PostgreSQL client."
-        exit 1
+        return 1
     fi
 
     if ! PGPASSWORD="$PG_PASSWORD" psql -U "$PG_USER" -h "$PG_HOST" -c "SELECT 1" postgres &>/dev/null; then
         echo "Error: Cannot connect to PostgreSQL as $PG_USER"
-        exit 1
+        return 1
     fi
 
     echo "Prerequisites OK"
