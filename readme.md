@@ -27,7 +27,6 @@ TBD, but there's going to be a lot of prompts / context as markdown files. I've 
 
 ## Security
 
-- I've written all of this to have minimal security impact
-- But since I'm working on tooling, I try to call out in each subfolder's `readme.md` factors to consider as you use these tools
-- If I didn't include a `Security` section, then it's because I think there is nothing worth noting.
-
+- Since this repository is tooling, it necessarily touches things like environment files, sensitive configurations or local databases
+- For the purposes of safety and caution, I call out in each subfolder's `readme.md` security/risk factors to consider as you use these tools
+- If I didn't include a `Security` section, then it's because I think there is nothing worth noting

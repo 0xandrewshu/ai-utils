@@ -14,7 +14,7 @@ The scripts handle the git worktree lifecycle. Project-specific setup (databases
   - Consider pointing your AI agent at this readme and these files, and your project to automatically "fill in the customization".
     - As a sample prompt, see `./prompt-customize.md`
 
-# Security
+## Security
 
   - These skills interact with secrets via `.env` files and in the environments, which is common practice but I wanted to call out.
     - As input, the scripts in `examples/worktree-hooks.*.sh` read passwords from the environment
