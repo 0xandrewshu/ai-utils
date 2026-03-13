@@ -24,3 +24,10 @@ In each directory, I'll aim to have:
 ## Technology
 
 TBD, but there's going to be a lot of prompts / context as markdown files. I've found shell files and Typescript scripts to be useful, so I may include those in here as well.
+
+## Security
+
+- I've written all of this to have minimal security impact
+- But since I'm working on tooling, I try to call out in each subfolder's `readme.md` factors to consider as you use these tools
+- If I didn't include a `Security` section, then it's because I think there is nothing worth noting.
+
